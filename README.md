@@ -1,2 +1,2 @@
 # transformer-cdn
-The CDN that takes care of UI rendering for the Transformer API data
+The CDN responsible for rendering the UI using Transformer API data.
