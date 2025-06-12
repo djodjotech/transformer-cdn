@@ -50,6 +50,17 @@ npm run build
 
 This will create a `dist` directory with the production build.
 
+## Preview Production Build
+
+To preview the production build locally:
+
+```bash
+npm run build  # Build the app first
+npm run preview
+```
+
+This will serve the built files from the `dist` directory, simulating a production environment.
+
 ## Docker Deployment
 
 The application uses a simple two-stage Docker build:
@@ -107,7 +118,7 @@ npm run format
 - `npm run build`: Build for production
 - `npm run lint`: Run ESLint
 - `npm run format`: Format code with Prettier
-- `npm run preview`: Preview production build
+- `npm run preview`: Preview production build (run after `npm run build`)
 
 ## License
 
