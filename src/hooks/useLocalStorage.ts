@@ -10,7 +10,10 @@ export const useLocalStorage = () => {
     if (savedState) {
       try {
         const parsedState = JSON.parse(savedState);
-        store.dispatch({ type: 'transformer/loadState', payload: parsedState });
+        // Only load the state if it has selectedTransformers
+        if (parsedState.selectedTransformers) {
+          store.dispatch({ type: 'transformer/loadState', payload: parsedState });
+        }
       } catch (error) {
         console.error('Failed to parse saved state:', error);
       }
@@ -21,7 +24,9 @@ export const useLocalStorage = () => {
       if (event.key === STORAGE_KEY && event.newValue) {
         try {
           const parsedState = JSON.parse(event.newValue);
-          store.dispatch({ type: 'transformer/loadState', payload: parsedState });
+          if (parsedState.selectedTransformers) {
+            store.dispatch({ type: 'transformer/loadState', payload: parsedState });
+          }
         } catch (error) {
           console.error('Failed to parse state from storage event:', error);
         }
@@ -39,7 +44,10 @@ export const useLocalStorage = () => {
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
       const state = store.getState();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.transformer));
+      // Only save if we have transformers and selectedTransformers
+      if (state.transformer.transformers.length > 0) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.transformer));
+      }
     });
 
     return () => {

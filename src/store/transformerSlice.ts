@@ -15,7 +15,7 @@ const transformerSlice = createSlice({
   reducers: {
     setTransformers: (state, action: PayloadAction<TransformerState['transformers']>) => {
       state.transformers = action.payload;
-      if (state.selectedTransformers.length === 0) {
+      if (state.selectedTransformers.length === 0 && state.transformers.length === 0) {
         state.selectedTransformers = action.payload.map(t => t.assetId);
       }
     },
