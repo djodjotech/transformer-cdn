@@ -10,8 +10,8 @@ export const useLocalStorage = () => {
     if (savedState) {
       try {
         const parsedState = JSON.parse(savedState);
-        // Only load the state if it has selectedTransformers
-        if (parsedState.selectedTransformers) {
+        // Load the state if it has transformers, regardless of selectedTransformers
+        if (parsedState.transformers?.length > 0) {
           store.dispatch({ type: 'transformer/loadState', payload: parsedState });
         }
       } catch (error) {
@@ -24,7 +24,7 @@ export const useLocalStorage = () => {
       if (event.key === STORAGE_KEY && event.newValue) {
         try {
           const parsedState = JSON.parse(event.newValue);
-          if (parsedState.selectedTransformers) {
+          if (parsedState.transformers?.length > 0) {
             store.dispatch({ type: 'transformer/loadState', payload: parsedState });
           }
         } catch (error) {
@@ -44,7 +44,7 @@ export const useLocalStorage = () => {
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
       const state = store.getState();
-      // Only save if we have transformers and selectedTransformers
+      // Save state if we have transformers, regardless of selectedTransformers
       if (state.transformer.transformers.length > 0) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state.transformer));
       }
