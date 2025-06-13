@@ -50,17 +50,6 @@ const VoltageChart: React.FC = () => {
     (state: RootState) => state.transformer,
   );
 
-  // Select all transformers by default only on first load
-  useEffect(() => {
-    const storedTransformers = localStorage.getItem('selectedTransformers');
-    if (!storedTransformers && transformers.length > 0 && selectedTransformers.length === 0) {
-      const allTransformerIds = transformers.map((t) => t.assetId);
-      allTransformerIds.forEach((id) => {
-        dispatch(toggleTransformer(id));
-      });
-    }
-  }, [dispatch, transformers, selectedTransformers.length]);
-
   const handleTransformerToggle = (assetId: number) => {
     try {
       dispatch(toggleTransformer(assetId));
